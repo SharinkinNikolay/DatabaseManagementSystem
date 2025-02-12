@@ -1,0 +1,60 @@
+1)select Name_group, Name_course 
+	from Groups 
+	order by Name_course desc; +
+2)select Surname.Students, Name.Students, Lastname.Stdents, Name_group.Groups 
+	from Students inner join Groups on(Students.Code_group=Groups.Code_group); +
+3)select Date_exam.Progress, Name_subject.Subjects 
+	from Progress inner join Subjects on(Progress.Code_subject=Subjects.Code_subject); +(дубли)
+4)select Name_lector 
+	from Lectors 
+	where Scince like("к%"); +
+5)select Name_lector, Post
+	from Lectors
+	where Scince<>"д.т.н"; +
+6)select Date_exam.Progress, Name_subject.Subjects 
+	from Progress inner join Subjects on(Progress.Code_subject=Subjects.Code_subject)
+	where Date_exam.Progress between "2003-01-01" and "2013-02-01"; +(ƒубли)
+7)select Name_lector, Post
+	from Lectors
+	where Scince in ("к.т.н","к.э.н", "д.т.н"); +
+8)select Surname.Stdents, Name.Students, Lastname.Stdents
+	from Students inner join Progress on(Progress.Code_stud=Students.Code_stud)
+	where Code_subject.Progress in(5,8,12,25);?????????? -
+9)select Name_group
+	from Groups
+	where Name_group like("%0"); +
+10)select Name_group.Groups, Name_course.Groups
+	from Groups inner join Students on(Code_group.Students=Code_group.Groups)
+	where Birthday.Students between "1976-01-01" and "1978-01-01" and Code_stud.Students between 10 and 150; +(дубли)
+11)select Name_subject.Subjects, Name_lector.Lectors 
+	from Progress inner join Lectors on (Code_lector.Lectors=Code_lector.Progress) inner join Subjects on(Code_subject.Progress=Code_subject.Subjects); +
+12)select Name_lector.Lectors
+	from Lectors inner join Progress on(Code_lector.Lectors=Code_lector.Progress) inner join Students on(Code_stud.Students=Code_stud.Progress)
+	where  -
+13)select Name_lector, Scince, YEAR(CURRENT_DATE-Date_)
+	from Lectors; +
+14)select Surname.Students, Name.Students, Lastname.Stdents, 5-Num_course.Groups
+	from Students inner join Groups on(Code_group.Students=Code_group.Groups); +
+15)select Name_group.Groups, count(*)
+	from Groups inner join Students on(Code_group.Groups=Code_group.Students)
+	group by Name_group.Groups; +
+16)select avg(Estimate.Progress), Surname.Students, Name.Stdents
+	from Progress inner join Students on(Code_stud.Students=Code_stud.Progress)
+	where Date_exam between "2003-05-01" and "2003-01-25"
+	group by Code_stud.Students; +
+17) -
+18)select * 
+	from Lectors
+	where CURRENT_DATE-Date_=(select max(CURRENT_DATE-Date_) from Lectors);
+19)select avg(Estimate.Progress) as Avg_estimate, Surname.Students, Name.Stdents
+	from Progress inner join Students on(Code_stud.Students=Code_stud.Progress)
+	where Date_exam between "2003-01-05" and "2003-01-25"
+	group by Code_stud.Students; +
+20)select *.Progress, Surname.Students, Name.Stdents
+	from Progress inner join Students on(Code_stud.Students=Code_stud.Progress)
+	where Date_exam=(select max(Date_exam) from Progress +
+21)select Name_group.Groups 
+	from Groups inner join Students on (Code_group.Groups=Code_group.Students)
+	left join 
+	(select count(*) Groups inner join Students on (Code_group.Groups=Code_group.Students) group by Code_group.Students) as T
+	where T>25; -
