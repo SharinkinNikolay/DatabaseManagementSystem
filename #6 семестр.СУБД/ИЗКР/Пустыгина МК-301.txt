@@ -1,0 +1,117 @@
+1).Выбрать из таблицы Groups названия групп и номера курсов (поля Name_group, Name_course) 
+и отсортировать результат по полю Name_course по убыванию 
+
+SELECT Name_group, Name_course from Groups order by Name_course desc; +
+
+2). Вывести список фамилий (поле Surname), имен (поле Name), отчеств (поле Lastname) студентов из таблицы 
+Students и названий групп (поле Name_group) из таблицы Groups, в которых они обучаются. 
+
+Select Surname, Name, Lastname, Name_Group from Students JOIN Groups on Students.code_group=Groups.code_group; +
+
+3). Вывести даты экзаменов (поле Date_exam) из таблицы Progress и названия дисциплин (поле Name_subject) 
+из таблицы Subjects, по которым сдавали экзамены в указанные даты. 
+
+Select Date_exam, Name_subject from Proggress JOIN Subjects on Progress.code_subject=Subjects.code_subject; +(дубли)
+
+4). Вывести список преподавателей (поле Name_lector) из таблицы Lectors с ученой степенью кандидат каких-либо наук,
+ т.е. у которых значение поля Science начинается с ‘к’. 
+
+Select Name_lector from Lectors where Sciense like "k%"; +
+
+5). Вывести список преподавателей (поле Name_lector) из таблицы Lectors и их должности (поле Post),
+которые не являются докторами технических наук, т.е. значение поля Science не равно ‘д.т.н.’. 
+
+Select Name_lector, Post from Lectors where Sciense!="d.t.n."; +
+
+6). Вывести даты экзаменов (поле Date_exam) из таблицы Progress и список дисциплин (поле Name_subject)
+ из таблицы Subjects, по которым сдавали экзамены в период с 01.01.2003 по 01.02.2003 (условие по полю Date_exam). 
+
+Select Date_exam, Name_subject from Progress Join Subjects on Progress.code_subject=Subjects.code_subject where Date_exam between
+ '2003-01-01' and '2003-02-01'; +(Дубли)
+
+7). Вывести список преподавателей (поле Name_lector) из таблицы Lectors и их должности (поле Post), 
+у которых есть одна из следующих ученых степеней: ‘к.т.н.’, ‘к.э.н.’, ‘д.т.н.’ (условие по полю Science). 
+
+Select Name_lector, Post from Lectors where Science in (‘к.т.н.’, ‘к.э.н.’, ‘д.т.н.’); +
+
+8). Вывести список студентов (поля Surname, Name, Lastname) из таблицы Students, которые сдавали экзамены 
+по дисциплинам со следующими кодами 5, 8, 12, 25 (условие по полю Code_subject). все 4
+
+Select Surname, Name, Lastname from Students JOIN Progress on Students.code_stud=Progress.code_stud where Code_subject=5 and Code_subject=8
+and Code_subject=12 and Code_subject=25 ; -
+
+9). Выбрать список групп (поле Name_group) из таблицы Groups, у которых значение оканчивается на ‘0’ (ноль). 
+
+Select Name_group from Groups where Name_group like "%0"; +
+
+10). Вывести список групп (поле Name_group) и номера курсов (поле Num_course) из таблицы Groups, 
+в которых учатся студенты с датами рождения с 01.01.1976 по 01.01.1978 (условие по полю Birthday из таблицы Students) 
+и кодами из диапазона 10 – 150 (условие по полю Code_stud из таблицы Students).
+
+Select Name_group, Num_course from Groups Join Students on Group.sode_group=Students.code_group where Birthday between '1976-01-01' and '1978-01-01'
+and Code_stud between 10 and 150; +(дубли)
+
+11). Вывести список названий дисциплин (поле Name_subject из таблицы Subjects) и имен преподавателей
+ (поле Name_lector из таблицы Lectors), которые принимали по этим дисциплинам экзамены. 
+
+Select Name_subject, Name_lector from Subjects JOIN Lectors JOIN Progress on Subjects.code_subject=Progress.code_subject and
+ Lector.code_lector=Progress.code_lector;        +(дубли)
+
+12). Вывести список имен преподавателей (поле Name_lector из таблицы Lectors), которые принимали экзамены у студентов 
+с кодами групп 10, 12, 15 (условие по полю Code_group из таблицы Students). тоже все три группы
+
+Select Name_lector from Lectors JOIN Students Join Progress on Lectors.code_lector=Progress.code_lector and 
+Students.code_stud=Progress.code_stud where Code_group=10 and Code_group=12 and Code_group=15 -
+
+
+13). Вывести список всех преподавателей (Name_lector), их ученые степени (поле Science) и срок их работы в годах
+ (использовать поле Date_ из таблицы Lectors). 
+
+Select Name_lector, Science, Date from Lectors where Date = YEAR(CURRENT DATE)-YAER(Date);-
+
+14). Вывести список всех студентов (поля Surname, Name, Lastname из таблицы Students) и номер курса, 
+на котором они занимаются, а также количество лет оставшейся учебы (использовать поле Num_course из таблицы Groups).
+
+Select Surname, Name, Lastname, Num_course, Year_left  from Students Join Groups on Students.code_group=Groups.code_group where 
+Year_left=6-Num_course; -
+ 
+15). Вывести список всех групп (поле Name_group из таблицы Groups) и количество студентов в каждой группе . 
+
+Select Name_group, count(code_stud) from Groups Join Students on Groups.code_group=Student.code_group group by Name_group; +
+
+16). Вывести средний балл (использовать поле Estimate из таблицы Progress) по результатам экзаменов каждого студента
+ и имена студентов (поля Surname, Name из таблицы Students) за период сдачи экзаменов с 05.01.2003 по 25.01.2003
+ (условие по полю Date_exam из таблицы Progress). 
+
+Select avg(estimate), Surname, Name from Progress JOIN Students on Progress.code_stud=Student.code_stud where date_exam
+between '2003-01-05' and '2003-01-25'; -
+
+17). Вывести фамилии и имена студентов (поля Surname, Name из таблицы Students) с максимальным средним баллом за 
+весь период обучения (условие по полю Estimate из таблицы Progress). 
+
+Select Surname, Name from Students JOIN Progress on Students.code_stud=Progress.code_stud where Estimate=(select max(avg(Estimate)) from Progress); -
+
+18). Вывести все сведения о преподавателях (все поля таблицы Lectors) с максимальным общим стажем работы (использовать поле Date_). 
+
+Select * from Lectors where date=(select min(date) from Lectors); +
+
+19). Вывести средний балл (использовать поле Estimate из таблицы Progress) по результатам экзаменов каждого студента, 
+поместив результат в поле Avg_estimate, и имена студентов (поля Surname, Name из таблицы Students) за период сдачи
+ экзаменов 05.01.2003 по 25.01.2003 (условие по полю Date_exam из таблицы Progress). 
+
+Select avg(Estimate) as Avg_estimate, Surname, Name, Student from Progress JOIN Students on Progress.code_stud=Students.code_stud
+where date between '2003-01-05' and '2003-01-25'; -
+
+20). Вывести все сведения о сдачах экзаменов (все поля из таблицы Progress) и список студентов (поля Surname,
+ Name из таблицы Students), которые по таблице Progress сдавали экзамены самыми последними (дата сдачи экзаменов Date_exam максимальна). 
+
+Select Progress.*, Students.Surname, Students.Name from Progress JOIN Students on Progress.code_stud=Students.code_stud where date_exam=
+(select max(date_exam) from Progress); +
+
+21). Вывести список групп (полеName_group), в которых студентов больше 25. 
+
+Select Name_group from Groups JOIN Students on Groups.code_group=Students.code_group where count=(count(code_stud) from Groups Join Students on Groups.code_group=Student.code_group group by Name_group) having count>25 -
+
+22). Вывести список студентов (поля Surname, Name, Lastname из таблицы Students), которые не сдавали ни одного экзамена 
+Select Surname, Name, Lastname from Students exec
+Select Surname, Name, Lastname from Students JOIN Progress on Students.code_stud=Progress.code_stud; -
